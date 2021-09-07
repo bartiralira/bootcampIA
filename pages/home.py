@@ -18,22 +18,37 @@ pio.renderers.default = "vscode"
 
 from pandas import read_csv
 import streamlit as st
+from multipage import MultiPage
 
+
+# deixa a pagina full wide
 st.set_page_config(layout="wide")
 
+
+# preparando a sepracao da pagina
 header = st.container()
 dataset = st.container()
-
+app = MultiPage()
 modelo = joblib.load("./modelo/classificador_cliente.pkl")
 
+
+# comeca os containers
 @st.cache
 def get_data(filename):
     file= pd.read_csv(filename,sep="\t",decimal='.', engine='python')
-    file.drop(file.columns[1],axis=1,inplace=True)
+    file = file.reindex(sorted(file.columns), axis=1)
+    file.drop(file.columns[0],axis=1,inplace=True)
     return file
 
+
+# sidebar
 st.sidebar.title("BootcampIA - Turma 17IA")
 st.sidebar.markdown("Equipe: Bartira, Vitor, Tiago e Ricardo")
+
+#faz as escolhas das paginas
+radioButton = st.sidebar.radio("Go to",['Home', 'Novo Cliente'])
+if (radioButton == "Novo Cliente"):
+    app.add_page("Novo Cliente", new_customer.app)
 
 with header:
     st.title("Criando clusters:")   
@@ -65,7 +80,7 @@ with dataset:
     #plt.figure(1, figsize=(32, 10))
     #fig, axes = plt.subplots(1, figsize=(32,10))
     fig = px.bar(df_res, x="cluster", y=df_res.columns, title="Wide-Form Input")
-    fig.update_layout(margin=dict(l=0, r=0, b=0, t=0),autosize=False,height=400,)
+    fig.update_layout(margin=dict(l=0, r=0, b=0, t=0),autosize=False,height=400,width=1400)
     st.write(fig)
 
 
