@@ -19,6 +19,7 @@ pio.renderers.default = "vscode"
 from pandas import read_csv
 import streamlit as st
 
+st.set_page_config(layout="wide")
 
 header = st.container()
 dataset = st.container()
