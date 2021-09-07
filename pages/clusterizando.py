@@ -7,8 +7,7 @@ import sklearn.metrics as sm
 import matplotlib.pyplot as plt
 from sklearn.cluster import KMeans
 import plotly.express as px
-from sklearn.preprocessing import StandardScaler, MinMaxScaler
-from sklearn.metrics import silhouette_score
+from sklearn.preprocessing import MinMaxScaler
 #from tqdm import tqdm
 from sklearn.decomposition import PCA
 import joblib
@@ -44,17 +43,19 @@ def app():
         file= pd.read_csv(filename,sep="\t",decimal='.', engine='python')
         file = file.reindex(sorted(file.columns), axis=1)
         file.drop(file.columns[0],axis=1,inplace=True)
+        file.drop(["cluster"],axis=1,inplace=True)
         return file
 
     with header:
         st.title("Clusterizando:")   
 
         df = get_data('./data/datasetclusterizado.csv')
+        #df.drop(["cluster"],inplace=True)
 
-        cluster=pd.to_numeric(df.cluster.unique())
-        cluster_min=int(cluster.min())
-        cluster_max=int(cluster.max())
-        sel_col= st.columns(1)
+        #cluster=pd.to_numeric(df.cluster.unique())
+        #cluster_min=int(cluster.min())
+        #cluster_max=int(cluster.max())
+        #sel_col= st.columns(1)
 
         
 
@@ -80,6 +81,22 @@ def app():
             fig = px.bar(df_res, x="cluster", y=df_res.columns, title="Wide-Form Input")
         fig.update_layout(margin=dict(l=0, r=0, b=0, t=0),autosize=False,height=400,width=1400)
         st.write(fig)
+
+
+
+        #Faremos agora 3D com 3 caracteristica principal
+        pca3 = PCA(n_components=3).fit_transform(X_minmax)
+
+        df_pca = pd.DataFrame(data=pca3, columns=['PC1','PC2','PC3'])
+        df_pca['Cluster'] = modelo.labels_
+
+        #configure_plotly_browser_state()
+
+        fig = px.scatter_3d(df_pca, x='PC1', y='PC2', z='PC3',color='Cluster' )
+        fig.update_layout(margin=dict(l=0, r=0, b=0, t=0),autosize=False,width=1200,height=900,)
+        st.write(fig)
+
+
 
 
 
