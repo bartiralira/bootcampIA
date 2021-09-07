@@ -42,4 +42,4 @@ def app():
     modelo = joblib.load("./modelo/classificador_cliente.pkl")
 
     with header:
-        st.title("Adicionando novo cliente:")
+        st.title("Previsão na Semana:")
