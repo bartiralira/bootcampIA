@@ -23,10 +23,10 @@ from multipage import MultiPage
 
 
 def app():
-    st.markdown("## Novo cliente")
+    #st.markdown("## Novo cliente")
     # deixa a pagina full wide
     #st.set_page_config(layout="wide")
-    app = MultiPage()
+    #app = MultiPage()
 
     # preparando a sepracao da pagina
     header = st.container()
@@ -45,4 +45,28 @@ def app():
 
     with header:
         st.title("Adicionando novo cliente:")   
-        
+    
+    with st.form(key='my_form'):
+        ativoCirculante = st.number_input("Ativo Circulante", format="%.2f")
+        capitalSocial = st.number_input('Capital Social', format="%.2f")
+        custos = st.number_input('Custos', format="%.2f")
+        dashboardCorrelacao=st.slider('Dashboard Correlação',-10.0,10.0,0.0)
+        definicaoRisco=st.slider('Definição de risco',0, 4,0)
+        empresa_MeEppMei=st.radio("Empresa ME/MEI/EPP",("Sim","Não"))
+        endividamento = st.number_input('Endividamento', format="%.2f")
+        estoque = st.number_input('Estoque', format="%.2f")
+        faturamentoBruto = st.number_input('Faturamento Bruto', format="%.2f")
+        limiteEmpresaAnaliseCredito = st.number_input('Analise de Crédito', format="%.2f")
+        maiorAtraso=st.slider('Mario atraso(dias)',0, 1000)
+        margemBruta = st.number_input('Margem bruta', format="%.2f")
+        margemBrutaAcumulada = st.number_input('Margem bruta acumulada', format="%.2f")
+        passivoCirculante = st.number_input('Passivo circulante', format="%.2f")
+        percentualProtestos=st.slider('Percentual de protestos (%)',0, 100)
+        prazoMedioRecebimentoVendas=st.slider('Prazo médio de recebimento de vendas',0, 1000)
+        restricoes=st.radio('Restrições',("Sim","Não"))
+        scorePontualidade=st.slider('Score de pontualidade',0.0, 1.0)
+        titulosEmAberto = st.number_input('Títulos em aberto', format="%.2f")
+        totalPatrimonioLiquido = st.number_input('Patrimonio líquido', format="%.2f")
+        valorAprovado = st.number_input('Valor aprovado', format="%.2f")
+        valorSolicitado = st.number_input('Valor solicitado', format="%.2f")
+        submit_button = st.form_submit_button(label='Submit')

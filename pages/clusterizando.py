@@ -114,6 +114,7 @@ def app():
         df_medias=pd.DataFrame(medias)
         #
         fig0 = px.bar(df_medias, x=df_medias.columns, title="Cluster 0")
+        fig0.update_traces(marker_color='green')
         fig0.update_layout(margin=dict(l=0, r=0, b=0, t=0),autosize=True)
         col1.write(fig0)
 # grafico de radar
@@ -137,6 +138,7 @@ def app():
         df_medias=pd.DataFrame(medias)
 
         fig0 = px.bar(df_medias, x=df_medias.columns, title="Cluster 1")
+        fig0.update_traces(marker_color='blue')
         fig0.update_layout(margin=dict(l=0, r=0, b=0, t=0),autosize=True)
         col1.write(fig0)
 # grafico de radar
@@ -159,6 +161,7 @@ def app():
         df_medias=pd.DataFrame(medias)
 
         fig0 = px.bar(df_medias, x=df_medias.columns, title="Cluster 2")
+        fig0.update_traces(marker_color='red')
         fig0.update_layout(margin=dict(l=0, r=0, b=0, t=0),autosize=True)
         col1.write(fig0)
 # grafico de radar
@@ -181,6 +184,7 @@ def app():
         df_medias=pd.DataFrame(medias)
 
         fig0 = px.bar(df_medias, x=df_medias.columns, title="Cluster 3")
+        fig0.update_traces(marker_color='purple')
         fig0.update_layout(margin=dict(l=0, r=0, b=0, t=0),autosize=True)
         col1.write(fig0)
 # grafico de radar
@@ -204,6 +208,7 @@ def app():
         df_medias=pd.DataFrame(medias)
 
         fig0 = px.bar(df_medias, x=df_medias.columns, title="Cluster 4")
+        fig0.update_traces(marker_color='yellow')
         fig0.update_layout(margin=dict(l=0, r=0, b=0, t=0),autosize=True)
         col1.write(fig0)
 # grafico de radar
