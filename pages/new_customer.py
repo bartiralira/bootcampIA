@@ -30,7 +30,7 @@ def app():
 
     # preparando a sepracao da pagina
     header = st.container()
-    dataset = st.container()
+    novo_cluster = st.container()
 
     modelo = joblib.load("./modelo/classificador_cliente.pkl")
 
@@ -40,11 +40,13 @@ def app():
     def get_data(filename):
         file= pd.read_csv(filename,sep="\t",decimal='.', engine='python')
         file = file.reindex(sorted(file.columns), axis=1)
-        file.drop(file.columns[0],axis=1,inplace=True)
+        file.drop(file.columns[0],inplace=True,axis=1)
+        file.drop(["cluster"],inplace=True,axis=1)
         return file
 
     with header:
-        st.title("Adicionando novo cliente:")   
+        st.title("Adicionando novo cliente:")
+        df = get_data('./data/datasetclusterizado.csv')   
     
     with st.form(key='my_form'):
         ativoCirculante = st.number_input("Ativo Circulante", format="%.2f")
@@ -69,4 +71,12 @@ def app():
         totalPatrimonioLiquido = st.number_input('Patrimonio líquido', format="%.2f")
         valorAprovado = st.number_input('Valor aprovado', format="%.2f")
         valorSolicitado = st.number_input('Valor solicitado', format="%.2f")
-        submit_button = st.form_submit_button(label='Submit')
+        submit_button = st.form_submit_button(label='Cluster Indicado')
+
+    with novo_cluster:
+        if submit_button:
+            #dd=[[ativoCirculante,capitalSocial,custos,dashboardCorrelacao,definicaoRisco,empresa_MeEppMei,endividamento,#estoque,faturamentoBruto,limiteEmpresaAnaliseCredito,maiorAtraso,margemBruta,margemBrutaAcumulada,#passivoCirculante,percentualProtestos,prazoMedioRecebimentoVendas,restricoes,scorePontualidade,titulosEmAberto,#totalPatrimonioLiquido,valorAprovado,valorSolicitado]]
+            #df_new=pd.DataFrame(dd)
+            #df_new.columns = df.columns
+            st.write(restricoes)
+            #st.write(modelo.predict(df_new))
