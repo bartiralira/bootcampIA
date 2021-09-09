@@ -1,3 +1,4 @@
+from typing import Text
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
@@ -103,7 +104,8 @@ def app():
     with cluster0:
 
         st.subheader("Cluster 0:")
-        st.markdown("**Caracteristica:** Grande empresas com alto score de pontualidade e uma consideravel margem bruta acumulada. ")
+        st.markdown("**Caracteristica: Grandes empresas e pontual**")
+        st.markdown("*Grandes empresas com alto score de pontualidade e razoável margem bruta acumulada.*")
         st.write("")
         st.write("")
         col1, col2 = st.columns([1,1.2])
@@ -127,7 +129,8 @@ def app():
     with cluster1:
 
         st.subheader("Cluster 1:")
-        st.markdown("**Caracteristica:** Apenas empresas pequenas empresas com score de pontualidade alto.")
+        st.markdown("**Caracteristica: Pequenas empresas e pontual**")
+        st.markdown("* Apenas empresas pequenas empresas com score de pontualidade alto.*")
         st.write("")
         st.write("")
         col1, col2 = st.columns([1,1.2])
@@ -150,7 +153,8 @@ def app():
     with cluster2:
 
         st.subheader("Cluster 2:")
-        st.markdown("**Caracteristica:** Apenas pequenas empresas com baixo score de pontualidade e com algumas restrições.")
+        st.markdown("**Caracteristica: Pequenas empresas sem pontualidade.**")
+        st.markdown("*Apenas pequenas empresas com baixo score de pontualidade e com algumas restrições.*")
         st.write("")
         st.write("")
         col1, col2 = st.columns([1,1.2])
@@ -173,7 +177,8 @@ def app():
     with cluster3:
 
         st.subheader("Cluster 3:")
-        st.markdown("**Caracteristica:** Grandes empresas com baixo score de pontualidade e indice de dashboard alto e com definição de risco médio.")
+        st.markdown("**Caracteristica: Grandes empresas sem pontualidade**")
+        st.markdown("*Grandes empresas com baixo score de pontualidade e indice de dashboard alto e com definição de risco médio.*")
         st.write("")
         st.write("")
         col1, col2 = st.columns([1,1.2])
@@ -197,7 +202,8 @@ def app():
     with cluster4:
 
         st.subheader("Cluster 4:")
-        st.markdown("**Caracteristica:** Clientes com restrições e com alto score de pontualidade.")
+        st.markdown("**Caracteristica: Empresas (grandes e pequenas) pontuais mas com restrição**")
+        st.markdown("*Clientes com restrições e com alto score de pontualidade.*")
         st.write("")
         st.write("")
         col1, col2 = st.columns([1,1.2])
