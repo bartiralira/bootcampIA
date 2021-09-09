@@ -9,4 +9,4 @@ RUN mkdir ~/.bootcamp && cp config.toml ~/.bootcamp/config.toml && cp credential
 EXPOSE 80
 WORKDIR /app
 ENTRYPOINT ["bootcamp","run"]
-CMD [ "home.py" ]
+CMD [ "app.py" ]
