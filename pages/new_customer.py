@@ -1,24 +1,8 @@
 import pandas as pd
-import matplotlib.pyplot as plt
-import numpy as np
-import missingno as msno
-import seaborn as sbs
-import sklearn.metrics as sm
-import matplotlib.pyplot as plt
-from sklearn.cluster import KMeans
-import plotly.express as px
-from sklearn.preprocessing import StandardScaler, MinMaxScaler
-from sklearn.metrics import silhouette_score
-#from tqdm import tqdm
-from sklearn.decomposition import PCA
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.ensemble import RandomForestRegressor as rfr
 import joblib
-
-import plotly.io as pio
-pio.renderers.default = "vscode"
-
-from pandas import read_csv
 import streamlit as st
-from multipage import MultiPage
 
 
 
@@ -31,6 +15,7 @@ def app():
     # preparando a sepracao da pagina
     header = st.container()
     novo_cluster = st.container()
+    sugestao_limite = st.container()
 
     modelo = joblib.load("./modelo/classificador_cliente.pkl")
 
@@ -50,6 +35,7 @@ def app():
     
     with novo_cluster: 
         form = st.form(key='my_form')
+        #cnpjSemTraco = form.number_imput("CNPJ (sem traço)")
         ativoCirculante = form.number_input("Ativo Circulante", format="%.2f")
         capitalSocial = form.number_input('Capital Social', format="%.2f")
         custos = form.number_input('Custos', format="%.2f")
@@ -72,15 +58,29 @@ def app():
         totalPatrimonioLiquido = form.number_input('Patrimonio líquido', format="%.2f")
         valorAprovado = form.number_input('Valor aprovado', format="%.2f")
         valorSolicitado = form.number_input('Valor solicitado', format="%.2f")
-        submit_button = form.form_submit_button(label='Cluster Indicado')
+        cluster_button = form.form_submit_button(label='Cluster Indicado')
+
 
     with novo_cluster:
-        if submit_button:
+        if cluster_button:
             dd=[[ativoCirculante,capitalSocial,custos,dashboardCorrelacao,definicaoRisco,empresa_MeEppMei,endividamento,
             estoque,faturamentoBruto,limiteEmpresaAnaliseCredito,maiorAtraso,margemBruta,margemBrutaAcumulada,
             passivoCirculante,percentualProtestos,prazoMedioRecebimentoVendas,restricoes,scorePontualidade,titulosEmAberto,totalPatrimonioLiquido,valorAprovado,valorSolicitado]]
             df_new=pd.DataFrame(dd)
             df_new.columns = df.columns
-            cluster_indicado =modelo.predict(df_new)
-            st.write(f'O cliente é indicado para o cluster: {cluster_indicado}')
+            cluster_indicado1 = modelo.predict(df_new)
+            cluster_indicado = str(modelo.predict(df_new))
+            if cluster_indicado == "[0]":
+                cluster_label = "Cluster 0 - Grandes empresas e pontual"
+            elif cluster_indicado == "[1]":
+                cluster_label = "Cluster 1 - Pequenas empresas e pontual"
+            elif cluster_indicado == "[2]":
+                cluster_label = "Cluster 2 - Pequenas empresas sem pontualidade."
+            elif cluster_indicado == "[3]":
+                cluster_label = "Cluster 3 - Grandes empresas sem pontualidade"
+            elif cluster_indicado == "[4]":
+                cluster_label = "Cluster 4 - Empresas (grandes e pequenas) pontuais mas com restrição"
+           
+            #st.write(f'O cliente é indicado para o cluster: {cluster_indicado1}')
+            st.markdown(f'O cliente é indicado para o cluster: **{cluster_label}**')
             #st.write(empresa_MeEppMei)

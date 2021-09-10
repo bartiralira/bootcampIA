@@ -1,24 +1,9 @@
-from typing import Text
 import pandas as pd
-import matplotlib.pyplot as plt
-import numpy as np
-import missingno as msno
-import seaborn as sbs
-import sklearn.metrics as sm
-import matplotlib.pyplot as plt
-from sklearn.cluster import KMeans
-import plotly.express as px
-from sklearn.preprocessing import MinMaxScaler
-#from tqdm import tqdm
-from sklearn.decomposition import PCA
 import joblib
-
-import plotly.io as pio
-pio.renderers.default = "vscode"
-
-from pandas import read_csv
+from sklearn.preprocessing import MinMaxScaler
 import streamlit as st
-from multipage import MultiPage
+import plotly.express as px
+from sklearn.decomposition import PCA
 
 
 # deixa a pagina full wide
@@ -177,7 +162,7 @@ def app():
     with cluster3:
 
         st.subheader("Cluster 3:")
-        st.markdown("**Caracteristica: Grandes empresas sem pontualidade**")
+        st.markdown("**Caracteristica: Grandes empresas sem pontualidade.**")
         st.markdown("*Grandes empresas com baixo score de pontualidade e indice de dashboard alto e com definição de risco médio.*")
         st.write("")
         st.write("")
@@ -202,7 +187,7 @@ def app():
     with cluster4:
 
         st.subheader("Cluster 4:")
-        st.markdown("**Caracteristica: Empresas (grandes e pequenas) pontuais mas com restrição**")
+        st.markdown("**Caracteristica: Empresas (grandes e pequenas) pontuais mas com restrição.**")
         st.markdown("*Clientes com restrições e com alto score de pontualidade.*")
         st.write("")
         st.write("")
