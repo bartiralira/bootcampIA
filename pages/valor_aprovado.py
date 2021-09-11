@@ -17,7 +17,8 @@ def app():
     novo_cluster = st.container()
     sugestao_limite = st.container()
 
-    modelo = joblib.load("./modelo/indicacao_valor_maximo.pkl")
+    modelo_peq = joblib.load("./modelo/indicacao_valor_maximo_peq.pkl")
+    modelo_gran = joblib.load("./modelo/indicacao_valor_maximo_gra.pkl")
 
 
     # comeca os containers
@@ -31,7 +32,7 @@ def app():
 
     with header:
         st.title("Adicionando novo cliente:")
-        df = get_data('./data/datasetclusterizado.csv')   
+        #df = get_data('./data/datasetclusterizado.csv')   
     
     with novo_cluster: 
         form = st.form(key='my_form')
@@ -43,19 +44,19 @@ def app():
         definicaoRisco=form.slider('Definição de risco',0, 4,0)
         empresa_MeEppMei= (1 if form.radio("Empresa ME/MEI/EPP",("Sim","Não"))=="Sim" else 0)
         endividamento = form.number_input('Endividamento', format="%.2f")
-        estoque = form.number_input('Estoque', format="%.2f")
-        faturamentoBruto = form.number_input('Faturamento Bruto', format="%.2f")
+        #estoque = form.number_input('Estoque', format="%.2f")
+        #faturamentoBruto = form.number_input('Faturamento Bruto', format="%.2f")
         limiteEmpresaAnaliseCredito = form.number_input('Analise de Crédito', format="%.2f")
         maiorAtraso=form.slider('Maior atraso(dias)',0, 1000)
-        margemBruta = form.number_input('Margem bruta', format="%.2f")
+        #margemBruta = form.number_input('Margem bruta', format="%.2f")
         margemBrutaAcumulada = form.number_input('Margem bruta acumulada', format="%.2f")
-        passivoCirculante = form.number_input('Passivo circulante', format="%.2f")
+        #passivoCirculante = form.number_input('Passivo circulante', format="%.2f")
         percentualProtestos=form.slider('Percentual de protestos (%)',0, 100)
         prazoMedioRecebimentoVendas=form.slider('Prazo médio de recebimento de vendas',0, 1000)
         restricoes=(1 if form.radio('Restrições',("Sim","Não")) == "Sim" else 0)
         scorePontualidade=form.slider('Score de pontualidade',0.0, 1.0)
         titulosEmAberto = form.number_input('Títulos em aberto', format="%.2f")
-        totalPatrimonioLiquido = form.number_input('Patrimonio líquido', format="%.2f")
+        #totalPatrimonioLiquido = form.number_input('Patrimonio líquido', format="%.2f")
         #valorAprovado = form.number_input('Valor aprovado', format="%.2f")
         valorSolicitado = form.number_input('Valor solicitado', format="%.2f")
         valor_sugerido_button = form.form_submit_button(label='Valor máximo indicado')
@@ -63,19 +64,51 @@ def app():
 
     with sugestao_limite:
         if valor_sugerido_button:
-            new_valor=[[ativoCirculante,capitalSocial,custos,dashboardCorrelacao,definicaoRisco,empresa_MeEppMei,endividamento,
-            estoque,faturamentoBruto,limiteEmpresaAnaliseCredito,maiorAtraso,margemBruta,margemBrutaAcumulada,
-            passivoCirculante,percentualProtestos,prazoMedioRecebimentoVendas,restricoes,scorePontualidade,titulosEmAberto,totalPatrimonioLiquido,valorSolicitado]]
-            df_valor=pd.DataFrame(new_valor)
-            #df_valor.columns = df.columns
 
-            #fazendo a predição
-            #valor = clf.predict(df_valor.iloc[:, new_dd.columns != 'valorAprovado'])
+            if empresa_MeEppMei == 1:
+                    
+                new_valor=[[ativoCirculante,
+                capitalSocial,
+                custos,
+                dashboardCorrelacao,
+                definicaoRisco,
+                empresa_MeEppMei,
+                endividamento,
+                limiteEmpresaAnaliseCredito,
+                maiorAtraso,
+                margemBrutaAcumulada,
+                percentualProtestos,
+                prazoMedioRecebimentoVendas,
+                restricoes,
+                scorePontualidade,
+                titulosEmAberto,
+                valorSolicitado]]
+                
 
-            #df_valor=pd.DataFrame(df_valor)
-            #df_valor.columns = df.columns
-            #valor_indicado =modelo.predict(df_valor.iloc[:, df_valor.columns != 'valorAprovado'])
-            valor_indicado =modelo.predict(new_valor)
+                valor_indicado =modelo_peq.predict(new_valor)
 
-            #imprimindo valor sugerido na tela
-            st.write(f'Valor máximo indicado: {valor_indicado}')
+                #imprimindo valor sugerido na tela
+                st.write(f'Valor máximo indicado: {valor_indicado}')
+            else:
+                new_valor2=[[ativoCirculante,
+                capitalSocial,
+                custos,
+                dashboardCorrelacao,
+                definicaoRisco,
+                empresa_MeEppMei,
+                endividamento,
+                limiteEmpresaAnaliseCredito,
+                maiorAtraso,
+                margemBrutaAcumulada,
+                percentualProtestos,
+                prazoMedioRecebimentoVendas,
+                restricoes,
+                scorePontualidade,
+                titulosEmAberto,
+                valorSolicitado]]
+                
+
+                valor_indicado =modelo_gran.predict(new_valor2)
+
+                #imprimindo valor sugerido na tela
+                st.write(f'Valor máximo indicado: {valor_indicado}')
