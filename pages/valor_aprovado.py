@@ -46,7 +46,7 @@ def app():
         estoque = form.number_input('Estoque', format="%.2f")
         faturamentoBruto = form.number_input('Faturamento Bruto', format="%.2f")
         limiteEmpresaAnaliseCredito = form.number_input('Analise de Crédito', format="%.2f")
-        maiorAtraso=form.slider('Mario atraso(dias)',0, 1000)
+        maiorAtraso=form.slider('Maior atraso(dias)',0, 1000)
         margemBruta = form.number_input('Margem bruta', format="%.2f")
         margemBrutaAcumulada = form.number_input('Margem bruta acumulada', format="%.2f")
         passivoCirculante = form.number_input('Passivo circulante', format="%.2f")
