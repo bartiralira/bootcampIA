@@ -1,6 +1,6 @@
 import pandas as pd
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.ensemble import RandomForestRegressor as rfr
+#from sklearn.preprocessing import MinMaxScaler
+#from sklearn.ensemble import RandomForestRegressor as rfr
 import joblib
 import streamlit as st
 
