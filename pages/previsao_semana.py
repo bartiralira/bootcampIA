@@ -38,16 +38,17 @@ def app():
 
     with col1: 
         form1 = st.form(key='my_form1')
-        qtd_dias=form1.slider('Quantidade de dias:',0, 30,0)
+        qtd_dias=form1.slider('Quantidade de dias:',0, 30)
         valor_dia_button = form1.form_submit_button(label='Previsão diária')
         if valor_dia_button:
+            
             previsao_dia =model_dia.predict(qtd_dias)
             #imprimindo valor sugerido na tela
             st.write(f'Previsão diária: {previsao_dia}')
     
     with col2: 
         form2 = st.form(key='my_form2')
-        qtd_semanas=form2.slider('Quantidade de semana:',0, 30,0)
+        qtd_semanas=form2.slider('Quantidade de semana:',0, 4)
         valor_semana_button = form2.form_submit_button(label='Previsão semanal')
         if valor_semana_button:
             previsao_semana =model_semana.predict(qtd_semanas)
